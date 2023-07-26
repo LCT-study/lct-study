@@ -3,19 +3,15 @@ input = sys.stdin.readline
 
 n,m,k = map(int, input().split())
 arr = sorted(list(map(int, input().split())), reverse=True)
-i = arr[0]
-j = arr[1]
-res = 0
-count = 1
-flag = False
+i = arr[0] # 가장 큰 수 
+j = arr[1] # 두번째로 큰 수 
 
-while(m>0):
-    while(count%(k+1)!=0) and (m>1):
-        count+=1
-        m-=1 
-        res+=i
-    res+=j
-    m-=1
-    count+=1
+# 가장 큰 수 더해지는 횟수
+i_count = int(m/(k+1))*k + m%(k+1) 
 
-print(res)
+# 두번째로 큰 수 더해지는 횟수 
+j_count = m - i_count
+
+answer = i_count * i + j_count*j
+
+print(answer)
