@@ -11,7 +11,7 @@ max_data = max(data) # 가장 큰 수 저장
 
 sum = 0 # 더해줄 변수
 count = 0 # 더해주는 횟수 카운트
-bool = 0 # 3번 더해지고 더해지는 수 바꿀 시 다른 수로 바꾸는 조건 변수
+bool = 0 # 3번 더해지고 더해지는 수 바꿀 시 다른 수로 바꾸는 조건 변수.
 
 for i in range(int(l[1])) :
     if(count == int(l[2])) : # 최대 K번 더할 수 있음
