@@ -22,29 +22,41 @@ dy = [0, 1,0,-1]
 answer = 1 # 처음 캐릭터가 있는 곳은 육지
 turn = 0
 
+def isAble(row, col, x, y):
+    if 0<=x<row and 0<=y<col:
+        return True
+    else:
+        return False
+
 while True:
+    
+    # 반시계 방향으로 회전
     dir = (dir+3)%4
     nx, ny = x + dx[dir], y + dy[dir]
-    # 회전한 방향에서 안 가본 곳 있음
-    if graph[nx][ny] == LAND and not(visited[nx][ny]):
-        visited[nx][ny]=True
-        answer+=1
-        turn = 0
-        x, y = nx, ny
-        continue # 뒤로 나오는 4방향 모두 방문한 경우에 대한 처리 필요 없음
-    else: # 회전 : 해당 방향 이미 방문한 곳임 OR 바다임
-        turn+=1
     
-    # 4칸 모두 방문했거나 바다인 경우
-    if turn==4:
-        # 바라보는 방향 유지하고 뒤로 한칸
-        nx = x - dx[dir]
-        ny = y - dy[dir]
-        if graph[nx][ny]==LAND:
+    # 지도에서 접근 가능한 곳인지 확인
+    # (책에서 주어진 케이스는 지도 밖으로 가는 방향이 없는 케이스라고 함)
+    if isAble(row, col, nx, ny): 
+        # 회전한 방향에서 안 가본 곳 있음
+        if graph[nx][ny] == LAND and not(visited[nx][ny]):
+            visited[nx][ny]=True
+            answer+=1
+            turn = 0
             x, y = nx, ny
-        else:
-            break
-        turn = 0 # 회전 횟수 초기화
+            continue # 뒤로 나오는 4방향 모두 방문한 경우에 대한 처리 필요 없음
+        else: # 회전 : 해당 방향 이미 방문한 곳임 OR 바다임
+            turn+=1
+        
+        # 4칸 모두 방문했거나 바다인 경우
+        if turn==4:
+            # 바라보는 방향 유지하고 뒤로 한칸
+            nx = x - dx[dir]
+            ny = y - dy[dir]
+            if graph[nx][ny]==LAND:
+                x, y = nx, ny
+            else:
+                break
+            turn = 0 # 회전 횟수 초기화
 print(answer)
 
 """
