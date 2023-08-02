@@ -2,7 +2,6 @@ def zip_str(strings):
     min_length= 1001
     word = ""
     for s in strings:
-        s = s.replace("1","")
         if min_length > len(s):
             #print(s, len(s))
             min_length = len(s)
@@ -20,7 +19,10 @@ def solution(s):
             string = s[j:j+i]
             if temp:
                 if temp[-1]!=string:
-                    data+=(str(count)+temp.pop())
+                    if count==1:
+                        data +=temp.pop()
+                    else:
+                        data+=(str(count)+temp.pop())
                     count=1
                     temp.append(string)
                 else:
@@ -28,11 +30,16 @@ def solution(s):
             else:
                 temp.append(string)
         if temp:
-            data+=(str(count)+temp.pop())
+            if count==1:
+                data +=temp.pop()
+            else:
+                data+=(str(count)+temp.pop())
         answer.append(data)
         
     length, word = zip_str(answer)
     return length
+    
+
     
 input1 = "aabbaccc"
 input2 = "ababcdcdababcdcd"
