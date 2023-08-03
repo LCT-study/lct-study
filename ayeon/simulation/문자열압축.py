@@ -1,3 +1,4 @@
+# 가장 작은 문자열압축 찾는 함수
 def zip_str(strings):
     min_length= 1001
     word = ""
@@ -14,14 +15,16 @@ def solution(s):
         temp = []
         count = 1
         data = ""
+
+        # 쪼개서 연속된 갯수 세기
         for j in range(0, len(s), i):
             #print(i, j, s[j:j+i], count)
             string = s[j:j+i]
             if temp:
                 if temp[-1]!=string:
-                    if count==1:
+                    if count==1: # 갯수가 1개면 숫자 없이 
                         data +=temp.pop()
-                    else:
+                    else: # 갯수가 1개가 아닌 경우 
                         data+=(str(count)+temp.pop())
                     count=1
                     temp.append(string)
@@ -29,6 +32,8 @@ def solution(s):
                     count+=1
             else:
                 temp.append(string)
+        
+        # 마지막 남은 조각에 대한 처리 
         if temp:
             if count==1:
                 data +=temp.pop()
