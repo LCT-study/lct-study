@@ -1,40 +1,41 @@
-from heapq import heappop, heappush
 import sys
+from heapq import heappush, heappop
 input = sys.stdin.readline
 
 INF = int(1e9)
-# 헛간 갯수, 통로 갯수(양방향)
-n,m=map(int, input().split())
-graph = [[]*(n+1) for _ in range(n+1)]
-distance = [INF]*(n+1)
-
-startNode=1
-distance[startNode]=0
-
+# 헛간 갯수, 양방향 통로 갯수
+n,m = map(int, input().split())
+graph = [[] for _ in range(n+1)]
+distance=[INF]*(n+1)
 for _ in range(m):
     start, end = map(int, input().split())
-    graph[start].append([end, 1])
+    graph[start].append([end,1])
     graph[end].append([start,1])
-# cost, 노드번호
-heap=[[distance[startNode],startNode]]
+    
+start=1
+distance[start]=0
+heap=[]
+heappush(heap,[distance[start],start])
 
 while heap:
-    dist, now = heappop(heap)
-    if distance[now]<dist:
+    dist, node = heappop(heap)
+    if distance[node]<dist:
         continue
-    for node, cost in graph[now]:
-        if distance[node]>cost+dist:
-            distance[node]=cost+dist
-            heappush(heap,[distance[node],node])
-            
+    for next_, cost in graph[node]:
+        if distance[next_]>cost+distance[node]:
+            distance[next_]=cost+distance[node]
+            heappush(heap,[distance[next_],next_])
 
-minDistance = min(distance[start+1:])
-minNode = distance.index(minDistance)
-minCount = distance.count(minDistance)
+print(distance)
+
+maxDistance = max(distance[1:])
+count = distance.count(maxDistance)
+node = distance.index(maxDistance)
+
 # 헛간번호, 헛간거리, 동일한 헛간 거리 가진거 갯수
-print( minNode, minDistance,minCount)
+print(node, maxDistance, count)
 
-"""
+"""숨바꼭질
 6 7
 3 6
 4 3
